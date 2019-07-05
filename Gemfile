@@ -9,6 +9,8 @@ gem 'puma'
 gem 'rails', '5.2.3'
 gem 'redis'
 
+gem 'faker', git: 'https://github.com/stympy/faker.git', branch: 'master'
+
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'sassc-rails'

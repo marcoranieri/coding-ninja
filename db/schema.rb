@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_142932) do
+ActiveRecord::Schema.define(version: 2019_07_05_144556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "games", force: :cascade do |t|
+    t.string "title"
+    t.integer "max_rounds"
+    t.text "notes"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "participations", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.boolean "done", default: false
+    t.bigint "user_id"
+    t.bigint "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["round_id"], name: "index_participations_on_round_id"
+    t.index ["user_id"], name: "index_participations_on_user_id"
+  end
+
+  create_table "rounds", force: :cascade do |t|
+    t.string "kata_id"
+    t.time "duration"
+    t.text "notes"
+    t.boolean "active", default: true
+    t.integer "winners", default: [], array: true
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_rounds_on_game_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -21,10 +54,16 @@ ActiveRecord::Schema.define(version: 2019_07_05_142932) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "nickname"
+    t.string "photo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "games", "users"
+  add_foreign_key "participations", "rounds"
+  add_foreign_key "participations", "users"
+  add_foreign_key "rounds", "games"
 end
