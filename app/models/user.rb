@@ -13,11 +13,29 @@ class User < ApplicationRecord
   has_many :games
 
 ### Fetch CodewarsUserInfo with codewars_username field (or set a default value)
-  def fetch_codewars_api_info
+  def fetch_api_codewars_user_info
+    private_fetch_user
+  end
+
+  def username
+    json_response["username"] if json_response
+  end
+
+  def rank
+    json_response["ranks"]["overall"]["name"] if json_response
+  end
+
+  def color
+    json_response["ranks"]["overall"]["color"] if json_response
+  end
+
+  private
+
+  def private_fetch_user
     username = codewars_username || "marcoranieri"
     url = "https://www.codewars.com/api/v1/users/#{username}"
-    user = JSON.parse(open(url).read)
-    # puts JSON.pretty_generate(user)
-    self.json_response = user
+    user_json = JSON.parse(open(url).read)
+    # puts JSON.pretty_generate(user_json)
+    self.json_response = user_json
   end
 end
