@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_07_05_144556) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "nickname"
+    t.string "codewars_username"
     t.string "photo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
