@@ -12,11 +12,12 @@ class User < ApplicationRecord
   has_many :rounds, through: :participations
   has_many :games
 
-### Fetch CodewarsUserInfo with codewars_username field (or set a default value)
+  # Fetch CodewarsUserInfo with codewars_username field (or set a default value)
   def fetch_api_codewars_user_info
     private_fetch_user
   end
 
+  # Helpers for Json API
   def username
     json_response["username"] if json_response
   end
@@ -37,5 +38,7 @@ class User < ApplicationRecord
     user_json = JSON.parse(open(url).read)
     # puts JSON.pretty_generate(user_json)
     self.json_response = user_json
+    self.nickname ||= username
+    self.save!
   end
 end

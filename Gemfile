@@ -9,7 +9,15 @@ gem 'puma'
 gem 'rails', '5.2.3'
 gem 'redis'
 
+# Faker
 gem 'faker', git: 'https://github.com/stympy/faker.git', branch: 'master'
+
+# ActiveAdmin
+gem 'activeadmin', github: 'activeadmin/activeadmin'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+# ActiveAdmin theme (+ @import in active_admin.scss)
+# FYI this theme REMOVE the filtered research
+gem 'active_admin_flat_skin'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'

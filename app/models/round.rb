@@ -6,7 +6,7 @@ class Round < ApplicationRecord
   has_many :participations
   has_many :users, through: :participations
 
-### Fetch KataInfo with kata_id or slug
+  # Fetch KataInfo with kata_id or slug
   def fetch_api_codewars_kata_info
     private_fetch_kata
   end
@@ -38,10 +38,11 @@ class Round < ApplicationRecord
   private
 
   def private_fetch_kata
-    kata_ref = "valid-braces" # :id_or_slug
+    kata_ref = kata_id || "valid-braces" # :id_or_slug
     url = "https://www.codewars.com/api/v1/code-challenges/#{kata_ref}"
     kata_json = JSON.parse(open(url).read)
     # puts JSON.pretty_generate(kata_json)
     self.json_response = kata_json
+    self.save!
   end
 end
