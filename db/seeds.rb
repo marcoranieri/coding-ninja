@@ -6,14 +6,27 @@ Round.destroy_all
 Game.destroy_all
 User.destroy_all
 
+VALID_KATA_ID = [
+  "59342039eb450e39970000a6",
+  "565f5825379664a26b00007c",
+  "544675c6f971f7399a000e79",
+  "59fca81a5712f9fa4700159a",
+  "5601409514fc93442500010b",
+  "5875b200d520904a04000003",
+  "51c8991dee245d7ddf00000e",
+  "56f69d9f9400f508fb000ba7",
+]
+
 puts "_________________________________________"
 
-puts "Default Devise user ( login purpose ):"
+puts "Default ADMIN Devise user ( login purpose ):"
 puts "test@test.com"
 puts "pass: 123456"
 User.create!(
   email: "test@test.com",
-  password: "123456"
+  password: "123456",
+  nickname: "admin_nickname",
+  admin: true
 )
 
 puts "_________________________________________"
@@ -25,6 +38,7 @@ puts "Creating n°10 Users"
     password: "123456",
     nickname: Faker::Superhero.name
   )
+  u.fetch_api_codewars_user_info
   puts "#{i}. #{u.email} - #{u.nickname}"
 end
 
@@ -51,14 +65,15 @@ puts "Creating n°3 Games *with WINNER*"
     end
 
     r = Round.create!(
-      kata_id:  Faker::Number.number(10),
-      duration: Faker::Number.number(3),
+      kata_id:  VALID_KATA_ID.sample,
+      # duration: Faker::Number.number(3),
       notes:    Faker::Lorem.paragraph,
       game:     g,
       active:   false,
       winners:  winners_array.uniq
     )
     puts " - #{i}. Kata_id: #{r.kata_id}"
+    r.fetch_api_codewars_kata_info
   end
   puts "_________________________________________"
 end
@@ -85,25 +100,27 @@ puts "Creating n°2 Games *NO WINNER yet*"
     end
 
     r = Round.create!(
-      kata_id:  Faker::Number.number(10),
-      duration: Faker::Number.number(3),
+      kata_id:  VALID_KATA_ID.sample,
+      # duration: Faker::Number.number(3),
       notes:    Faker::Lorem.paragraph,
       game:     g,
       active:   false,
       winners:  winners_array.uniq
     )
     puts " - #{i}. Kata_id: #{r.kata_id}"
+    r.fetch_api_codewars_kata_info
   end
 
   puts ""
   puts "> Creating 2..4 *NOT completed* Rounds for #{g.title}"
   rand(2..4).times do |i|
     r = Round.create!(
-      kata_id: Faker::Number.number(10),
+      kata_id: VALID_KATA_ID.sample,
       notes:   Faker::Lorem.paragraph,
       game:    Game.all.sample
     )
     puts " - #{i}. Kata_id: #{r.kata_id}"
+    r.fetch_api_codewars_kata_info
   end
   puts "_________________________________________"
 end

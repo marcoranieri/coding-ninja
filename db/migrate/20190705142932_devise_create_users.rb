@@ -36,6 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string   :nickname
       t.string   :codewars_username
       t.string   :photo
+      t.boolean  :admin, null: false, default: false
 
       t.timestamps null: false
     end
