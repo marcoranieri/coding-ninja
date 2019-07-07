@@ -43,8 +43,8 @@ puts "Creating n°10 Users"
 end
 
 puts "_________________________________________"
-
 puts ""
+
 puts "Creating n°3 Games *with WINNER*"
 3.times do |i|
   g = Game.create!(
@@ -56,6 +56,7 @@ puts "Creating n°3 Games *with WINNER*"
   puts "GAME #{i}. #{g.title}"
 
   puts ""
+
   puts "> Creating 3..5 *COMPLETED* Rounds for #{g.title}"
   rand(3..5).times do |i|
 
@@ -66,7 +67,7 @@ puts "Creating n°3 Games *with WINNER*"
 
     r = Round.create!(
       kata_id:  VALID_KATA_ID.sample,
-      # duration: Faker::Number.number(3),
+      duration: Time.now.sec + rand(0..20),
       notes:    Faker::Lorem.paragraph,
       game:     g,
       active:   false,
@@ -79,8 +80,8 @@ puts "Creating n°3 Games *with WINNER*"
 end
 
 puts "_________________________________________"
-
 puts ""
+
 puts "Creating n°2 Games *NO WINNER yet*"
 2.times do |i|
   g = Game.create!(
@@ -91,6 +92,7 @@ puts "Creating n°2 Games *NO WINNER yet*"
   puts "GAME #{i}. #{g.title}"
 
   puts ""
+
   puts "> Creating 2..3 *COMPLETED* Rounds for #{g.title}"
   rand(2..3).times do |i|
 
@@ -101,7 +103,7 @@ puts "Creating n°2 Games *NO WINNER yet*"
 
     r = Round.create!(
       kata_id:  VALID_KATA_ID.sample,
-      # duration: Faker::Number.number(3),
+      duration: Time.now.sec + rand(0..20),
       notes:    Faker::Lorem.paragraph,
       game:     g,
       active:   false,
@@ -112,6 +114,7 @@ puts "Creating n°2 Games *NO WINNER yet*"
   end
 
   puts ""
+
   puts "> Creating 2..4 *NOT completed* Rounds for #{g.title}"
   rand(2..4).times do |i|
     r = Round.create!(
@@ -126,10 +129,9 @@ puts "Creating n°2 Games *NO WINNER yet*"
 end
 
 puts "_________________________________________"
-
 puts ""
-puts "Creating lots of PARTICIPATIONS for each Round"
 
+puts "Creating lots of PARTICIPATIONS for each Round"
 Round.all.each do |round|
   rand(3..12).times do
     Participation.create!(
