@@ -1,0 +1,23 @@
+<%= simple_form_for(game) do |f| %>
+<%#= simple_form_for(@game) do |f| %>
+  <%= f.error_notification %>
+  <p><strong>GAME:</strong></p>
+  <div class="form-inputs">
+    <%= f.input :title, label: "Title:" %>
+    <%= f.input :max_rounds, label: "n° of Rounds" %>
+  </div>
+
+  <hr>
+  <p><strong>New Rounds:</strong></p>
+  <div class="fields">
+    <%= f.simple_fields_for :rounds do |builder| %>
+      <%= render 'round', f: builder %>
+    <% end %>
+  </div>
+  <hr>
+
+  <div class="form-actions">
+    <%= f.submit "Create", class: "btn btn-primary" %>
+    <%= link_to_add_round_form("Add Round", f, :rounds, class: "btn btn-primary" ) %>
+  </div>
+<% end %>

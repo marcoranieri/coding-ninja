@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'nokogiri'
-require 'pry'
 
 class ScraperKataCollection
 
@@ -24,7 +23,6 @@ class ScraperKataCollection
 
   def self.filter_by_kyu(kyu1, kyu2 = nil) # KYU is kata lvl (8 or 6 etc..)
     # _RETURN_ [ array ] of "collection_href"
-    # ["/collections/kyu8", "/collections/good-problem-for-beginner", ...]
 
     html_doc = Nokogiri::HTML(open(COLLECTION_URL).read)
 
@@ -43,6 +41,7 @@ class ScraperKataCollection
       .map { |e| e.parent.parent.search("a").attribute('href').value }
 
     result
+    # ["/collections/kyu8", "/collections/good-problem-for-beginner", ...]
   end
 
 end # of class
