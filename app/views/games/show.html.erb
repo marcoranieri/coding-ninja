@@ -1,0 +1,14 @@
+<h2><%= @game.title %></h2>
+
+<%= link_to "BACK", :back, class: "btn btn-primary" %>
+<%= link_to "DELETE GAME", @game, method: :delete, class: "btn btn-danger" %>
+
+<h4>Rounds:</h4>
+<ul>
+  <% @game.rounds.each do |round| %>
+    <li>
+      <%= round.kata_name if round.kata_name %>
+      <small><code><%= round.kata_id %></code></small>
+    </li>
+  <% end %>
+</ul>

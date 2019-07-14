@@ -2,7 +2,8 @@ require 'json'
 require 'open-uri'
 
 class Round < ApplicationRecord
-  belongs_to :game
+  belongs_to :game #, optional: true
+
   has_many :participations
   has_many :users, through: :participations
 
