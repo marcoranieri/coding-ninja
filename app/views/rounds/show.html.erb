@@ -1,0 +1,8 @@
+<%= link_to "BACK", :back, class: "btn btn-primary" %>
+<h1><%= @round.kata_name %></h1>
+<p>Category: <%= @round.kata_category %></p>
+<p style="background-color:<%=@round.kata_color%>; width: 100px; padding:5px 10px; border:1px solid black">
+  <%= @round.kata_rank %>
+</p>
+<p><%= link_to ">> CodeWars Link <<", @round.kata_url,target: "_blank" %></p>
+<p><%= @round.kata_description %></p>

@@ -16,7 +16,7 @@ gem 'faker', git: 'https://github.com/stympy/faker.git', branch: 'master'
 gem 'activeadmin', github: 'activeadmin/activeadmin'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 # ActiveAdmin theme (+ @import in active_admin.scss)
-# FYI this theme REMOVE the filtered research
+# FYI, this theme REMOVE the filtered research
 gem 'active_admin_flat_skin'
 
 gem 'autoprefixer-rails'
@@ -38,3 +38,5 @@ group :development, :test do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'dotenv-rails'
 end
+
+# https://www.youtube.com/watch?v=pulzZxPkgmE

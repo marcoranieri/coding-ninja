@@ -9,24 +9,39 @@ User.destroy_all
 VALID_KATA_ID = [
   "59342039eb450e39970000a6",
   "565f5825379664a26b00007c",
-  "544675c6f971f7399a000e79",
   "59fca81a5712f9fa4700159a",
   "5601409514fc93442500010b",
   "5875b200d520904a04000003",
   "51c8991dee245d7ddf00000e",
   "56f69d9f9400f508fb000ba7",
+  "52742f58faf5485cae000b9a",
+  "562c3b54746f50d28d000027",
+  "592538b3071ba54511000219",
+  "5679d5a3f2272011d700000d",
+  "5a30e7e9c5e28454790000c1",
 ]
 
 puts "_________________________________________"
 
 puts "Default ADMIN Devise user ( login purpose ):"
-puts "test@test.com"
+puts "a@test.com"
 puts "pass: 123456"
 User.create!(
-  email: "test@test.com",
+  email: "a@test.com",
   password: "123456",
   nickname: "admin_nickname",
   admin: true
+)
+
+puts""
+
+puts "STUDENT Devise user ( login purpose ):"
+puts "s@test.com"
+puts "pass: 123456"
+User.create!(
+  email: "s@test.com",
+  password: "123456",
+  nickname: "student_nickname",
 )
 
 puts "_________________________________________"
