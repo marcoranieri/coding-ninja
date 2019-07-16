@@ -1,14 +1,22 @@
 <h2><%= @game.title %></h2>
 
-<%= link_to "BACK", :back, class: "btn btn-primary" %>
+<%= link_to "BACK", :root, class: "btn btn-primary" %>
 <%= link_to "DELETE GAME", @game, method: :delete, class: "btn btn-danger" %>
 
 <h4>Rounds:</h4>
-<ul>
+<ol>
   <% @game.rounds.each do |round| %>
     <li>
-      <%= round.kata_name if round.kata_name %>
+      <strong><%= round.active ? "ACTIVE " : "Completed " %></strong>
+      <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
       <small><code><%= round.kata_id %></code></small>
+      <% if round.participations.present? %>
+        <p><%= round.participations.count %> participations:
+          <% round.participations.each do |partic| %>
+            <em>- <%= partic.user.email %></em>
+          <% end %>
+        </p>
+      <% end %>
     </li>
   <% end %>
-</ul>
+</ol>
