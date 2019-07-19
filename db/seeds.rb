@@ -49,7 +49,7 @@ puts "_________________________________________"
 puts "Creating n°10 Users"
 10.times do |i|
   u = User.create!(
-    email:    Faker::Internet.email,
+    email:    Faker::Internet.free_email,
     password: "123456",
     nickname: Faker::Superhero.name
   )
