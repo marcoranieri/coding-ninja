@@ -34,6 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
 
 ####### CUSTOM FIELDS
       t.string   :nickname
+      t.string   :codewars_api_key
       t.string   :codewars_username
       t.string   :photo
       t.boolean  :admin, null: false, default: false
