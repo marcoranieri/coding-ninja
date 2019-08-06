@@ -52,6 +52,13 @@ class GamesController < ApplicationController
     redirect_to :root
   end
 
+  # def scrape_kata
+  #   collection  = ScraperKataCollection.filter_by_kyu(8, 7)
+  #   @katas_array = collection.map do |scraped_kata_url|
+  #     ScraperKataCollection.get_titles_and_hrefs(scraped_kata_url)
+  #   end
+  # end
+
   private
 
   def set_game
