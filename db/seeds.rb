@@ -30,6 +30,7 @@ User.create!(
   email: "a@test.com",
   password: "123456",
   nickname: "admin_nickname",
+  codewars_api_key: "qsoyRuWkzMk6e5xZuey7",
   admin: true
 )
 
@@ -41,7 +42,7 @@ puts "pass: 123456"
 User.create!(
   email: "s@test.com",
   password: "123456",
-  nickname: "student_nickname",
+  nickname: "marcoranieri",
 )
 
 puts "_________________________________________"

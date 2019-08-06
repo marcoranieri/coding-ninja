@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_182225) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "nickname"
+    t.string "codewars_api_key"
     t.string "codewars_username"
     t.string "photo"
     t.boolean "admin", default: false, null: false
