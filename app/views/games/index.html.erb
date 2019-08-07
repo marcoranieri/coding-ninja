@@ -3,7 +3,9 @@
 <p>
   <%= link_to "Create Game", new_game_path, class: "btn btn-outline-primary" %>
 </p>
+<hr>
 
+<p><strong>Games in progress</strong></p>
 <ul> <!-- Games still in progress -->
   <% @games.reject(&:user).each do |game| %>
     <li>
@@ -18,6 +20,7 @@
 
 <hr>
 
+<p><strong>Ended Games</strong></p>
 <ul> <!-- Ended Games ( with Winner -> user_id ) -->
   <% @games.select(&:user).each do |game| %>
     <li>

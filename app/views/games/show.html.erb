@@ -2,8 +2,7 @@
 
 <%= link_to "< BACK", :root, class: "btn btn-outline-primary" %>
 
-<% if current_user&.admin %>
-<!-- USER is an ADMIN -->
+<% if current_user&.admin %><!-- USER is an ADMIN -->
 
   <%= link_to "DELETE GAME", @game, method: :delete, class: "btn btn-outline-danger" %>
   <hr>
@@ -12,9 +11,17 @@
   <ol>
     <% @game.rounds.each do |round| %>
       <li>
-        <strong><%= round.active ? "ACTIVE " : "Completed " %></strong>
+
+        <% if round.active %>
+          <i class="fas fa-running"></i> Active
+        <% else %>
+          <i class="fas fa-check"></i> Completed
+        <% end %>
+
         <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
+
         <small><code><%= round.kata_id %></code></small>
+
         <% if round.participations.present? %>
           <p><%= round.participations.count %> participations:<br>
             <% round.participations.each do |partic| %>
@@ -22,6 +29,7 @@
             <% end %>
           </p>
         <% end %>
+
       </li>
     <% end %>
   </ol>
