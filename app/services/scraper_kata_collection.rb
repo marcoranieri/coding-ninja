@@ -6,17 +6,22 @@ class ScraperKataCollection
   BASE_URL       = "https://www.codewars.com"
   COLLECTION_URL = "https://www.codewars.com/collections"
 
-  def self.get_titles_and_hrefs(coll_ref) # Full URL (www..) or just ID (katas-51)
-    # _RETURN_ an [ array ] of { hashes }
+  def self.get_titles_and_hrefs(coll_ref, output = "rb") # Full URL (www..) or just ID (katas-51)
+    # rb => _RETURN_ an [ array ] of { hashes }
+    # js => _RETURN_ an [ array ] of [ arrays ]
 
     url = coll_ref.include?("www") ? coll_ref : BASE_URL + coll_ref
     html_doc = Nokogiri::HTML(open(url).read)
 
     html_doc.search('.item-title a').map do |element|
-      {
-        title: element.text.strip,
-        href:  element.attribute('href').value
-      }
+      if output == "rb"
+        {
+          title: element.text.strip,
+          href:  element.attribute('href').value
+        }
+      elsif output == "js"
+        [ element.text.strip, element.attribute('href').value ]
+      end
     end
     # => [{:title=>"ToDo", :href=>"/collections/todo-998"},
     # {:title=>"LFC37", :href=>"/users/LFC37"},
@@ -48,4 +53,4 @@ class ScraperKataCollection
     # ["/collections/kyu8", "/collections/good-problem-for-beginner", ...]
   end
 
-end # of class
+end
