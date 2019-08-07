@@ -5,7 +5,7 @@ module ApplicationHelper
     fields = f.simple_fields_for(association, new_object, child_index: id) do |builder|
       render(association.to_s.singularize, f: builder) # render("round", send builder to form)
     end
-  #  raise
+    # raise
     link_to(name, '#', class: "add_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")})
   end
 end
