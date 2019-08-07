@@ -7,6 +7,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    @participation = Participation.new
   end
 
   def new
@@ -79,7 +80,6 @@ class GamesController < ApplicationController
     respond_to do |format|
       format.js  # <-- will render `app/views/games/scrape_kata.js.erb`
     end
-
 
   end
 

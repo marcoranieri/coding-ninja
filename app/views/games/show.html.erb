@@ -1,22 +1,53 @@
 <h2><%= @game.title %></h2>
 
 <%= link_to "< BACK", :root, class: "btn btn-outline-primary" %>
-<%= link_to "DELETE GAME", @game, method: :delete, class: "btn btn-outline-danger" %>
 
-<h4>Rounds:</h4>
-<ol>
-  <% @game.rounds.each do |round| %>
-    <li>
-      <strong><%= round.active ? "ACTIVE " : "Completed " %></strong>
-      <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
-      <small><code><%= round.kata_id %></code></small>
-      <% if round.participations.present? %>
-        <p><%= round.participations.count %> participations:<br>
-          <% round.participations.each do |partic| %>
-            |<em> <%= partic.user.email %></em>
-          <% end %>
-        </p>
-      <% end %>
-    </li>
+<% if current_user&.admin %>
+<!-- USER is an ADMIN -->
+
+  <%= link_to "DELETE GAME", @game, method: :delete, class: "btn btn-outline-danger" %>
+  <hr>
+
+  <h4>Rounds:</h4>
+  <ol>
+    <% @game.rounds.each do |round| %>
+      <li>
+        <strong><%= round.active ? "ACTIVE " : "Completed " %></strong>
+        <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
+        <small><code><%= round.kata_id %></code></small>
+        <% if round.participations.present? %>
+          <p><%= round.participations.count %> participations:<br>
+            <% round.participations.each do |partic| %>
+              |<em> <%= partic.user.email %></em>
+            <% end %>
+          </p>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+
+<% else %> <!-- USER is a GUEST -->
+
+  <!-- After JOIN -->
+  <% if @game.rounds.all? {|r| r.participations.pluck(:user_id).include?(current_user.id)} %>
+  <ul>
+    <% @game.rounds.each do |round| %>
+      <li>
+        <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
+        <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
+
+      </li>
+    <% end %>
+  </ul>
+
+  <!-- First Time ( Allow to Create Participations )  -->
+  <% else %>
+
+    <h2>Participate!</h2>
+    <%= simple_form_for([ @game, @participation ]) do |f| %>
+      <%= f.submit "JOIN", class: "btn btn-outline-success" %>
+    <% end %>
+
   <% end %>
-</ol>
+
+<% end %>

@@ -6,7 +6,7 @@ class Round < ApplicationRecord
 
   belongs_to :game #, optional: true
 
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :users, through: :participations
 
   # Fetch KataInfo with kata_id or slug
