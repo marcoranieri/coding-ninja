@@ -1,0 +1,22 @@
+console.log("CIAO");
+const kataArray = <%= @katas_array.to_json.html_safe %>;
+
+const reducer = (accumulator, currentValue) => {
+  accumulator + `
+    <a href="https://www.codewars.com${currentValue[1]}">${currentValue[0]}</a>
+  `
+};
+
+const mainDiv = document.querySelector("#div-inspired");
+
+const content = [];
+
+kataArray.forEach((array) => {
+  array.forEach((kata) => {
+    content.push(`
+      <a style="display:block;" target="_blank" href="https://www.codewars.com${kata[1]}">${kata[0]}</a>
+    `);
+  });
+});
+
+mainDiv.innerHTML = content.join("");

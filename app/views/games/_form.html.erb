@@ -17,8 +17,14 @@
 
   <div class="form-actions">
     <%= f.submit "Create", class: "btn btn-primary" %>
-    <%= link_to_add_round_form("Add Round", f, :rounds, class: "btn btn-primary" ) %>
+    <%= link_to_add_round_form("Add Round", f, :rounds, class: "btn btn-otline-warning") %>
   </div>
 <% end %>
 
-<%= link_to "Get Inspired!", controller: "games", action: "scrape_kata" %>
+<br><br>
+
+<%= link_to "Get Inspired!", controller: "games", action: "scrape_kata", remote: true %>
+
+<br><br>
+
+<div id="div-inspired"></div>
