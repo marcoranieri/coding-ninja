@@ -29,7 +29,7 @@
 <% else %> <!-- USER is a GUEST -->
 
   <!-- After JOIN -->
-  <% if @game.rounds.all? {|r| r.participations.pluck(:user_id).include?(current_user.id)} %>
+  <% if @game.rounds.all? {|r| r.users.include?(current_user)} %>
   <ul>
     <% @game.rounds.each do |round| %>
       <li>
@@ -40,7 +40,7 @@
     <% end %>
   </ul>
 
-  <!-- First Time ( Allow to Create Participations )  -->
+  <!-- JOIN > First Time ( Allow to Create Participations )  -->
   <% else %>
 
     <h2>Participate!</h2>
