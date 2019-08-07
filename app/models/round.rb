@@ -2,6 +2,8 @@ require 'json'
 require 'open-uri'
 
 class Round < ApplicationRecord
+  after_create :private_fetch_kata
+
   belongs_to :game #, optional: true
 
   has_many :participations

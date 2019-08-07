@@ -1,4 +1,5 @@
-console.log("CIAO");
+console.log("scrape_kata.js.erb");
+
 const kataArray = <%= @katas_array.to_json.html_safe %>;
 
 const reducer = (accumulator, currentValue) => {
@@ -7,16 +8,16 @@ const reducer = (accumulator, currentValue) => {
   `
 };
 
-const mainDiv = document.querySelector("#div-inspired");
-
 const content = [];
 
 kataArray.forEach((array) => {
   array.forEach((kata) => {
     content.push(`
       <a style="display:block;" target="_blank" href="https://www.codewars.com${kata[1]}">${kata[0]}</a>
+      ( ${kata[1]} )
     `);
   });
 });
 
+const mainDiv = document.querySelector("#div-inspired");
 mainDiv.innerHTML = content.join("");
