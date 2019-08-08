@@ -24,6 +24,8 @@ class RoundsController < ApplicationController
     @round.active = !@round.active
     @round.save!
 
+    # @game = Game.find(params[:game_id])
+
     respond_to do |format|
       format.js  # <-- will render `app/views/games/toggle.js.erb`
     end

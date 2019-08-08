@@ -1,1 +1,3 @@
-window.location.reload();
+<% if current_user&.admin %>
+  window.location.reload();
+<% end %>

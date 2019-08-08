@@ -16,9 +16,9 @@
         <%= check_box_tag dom_id(round, :checkbox), nil, round.active, data: { url: game_round_toggle_path(@game,round), remote: :true, method: :post } %>
 
         <% if round.active %>
-          <i class="fas fa-running"></i> Active
+          <span style="color:darkorange"><i class="fas fa-running"></i> Active</span>
         <% else %>
-          <i class="fas fa-check"></i> Completed
+          <span style="color:green"><i class="fas fa-check"></i> Completed</span>
         <% end %>
 
         <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
@@ -26,13 +26,13 @@
         <small><code><%= round.kata_id %></code></small>
 
         <% if round.participations.present? %>
-          <p><%= round.participations.count %> participations:<br>
+          <p>
+            <%= round.participations.count %> participation(s):<br>
             <% round.participations.each do |particip| %>
               |<em> <%= particip.user.email %></em>
             <% end %>
           </p>
         <% end %>
-
 
       </li>
     <% end %>
@@ -45,21 +45,22 @@
     <hr>
     <ul>
       <% @game.rounds.each do |round| %>
-
         <li>
+
           <!-- ACTIVE round -->
           <% if round.active %>
-            <i class="fas fa-running"></i> Active
+            <span style="color:darkorange"><i class="fas fa-running"></i> Active</span>
             <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
+
           <% else %>
-          <!-- COMPLETED round -->
-            <i class="fas fa-check"></i> Completed
+          <!-- COMPLETED round ( add link.DISABLED )-->
+            <span style="color:green"><i class="fas fa-check"></i> Completed</span>
             <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger disabled" %>
           <% end %>
 
           <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
-        </li>
 
+        </li>
       <% end %>
     </ul>
 
