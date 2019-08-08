@@ -47,7 +47,16 @@
       <% @game.rounds.each do |round| %>
 
         <li>
-          <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
+          <!-- ACTIVE round -->
+          <% if round.active %>
+            <i class="fas fa-running"></i> Active
+            <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
+          <% else %>
+          <!-- COMPLETED round -->
+            <i class="fas fa-check"></i> Completed
+            <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger disabled" %>
+          <% end %>
+
           <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
         </li>
 
