@@ -59,6 +59,8 @@ class GamesController < ApplicationController
     @katas_array = collection.map do |scraped_kata_url|
       ScraperKataCollection.get_titles_and_hrefs(scraped_kata_url, "js")
     end
+
+# in "app/views/games/scrape_kata.js.erb"
 # console.log('<%= @katas_array.first.first.first.to_json.html_safe %>');
 
 # mainDiv.innerHTML = `
@@ -75,7 +77,6 @@ class GamesController < ApplicationController
 
 #   </ul>
 # `
-
 
     respond_to do |format|
       format.js  # <-- will render `app/views/games/scrape_kata.js.erb`

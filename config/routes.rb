@@ -4,8 +4,14 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :games do
-    resources :rounds
+
+    resources :rounds do
+      # Ajax call to toggle round.active
+      post "toggle", to: "rounds#toggle"
+    end
+
     resources :participations, only: :create # from Games#SHOW
+
   end
 
   # In games#new form, fetch kata collections for inspiration

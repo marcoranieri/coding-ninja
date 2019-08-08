@@ -9,8 +9,11 @@
 
   <h4>Rounds:</h4>
   <ol>
-    <% @game.rounds.each do |round| %>
+    <% @game&.rounds.each do |round| %>
       <li>
+
+        <!-- Ajax call to toggle round.active -->
+        <%= check_box_tag dom_id(round, :checkbox), nil, round.active, data: { url: game_round_toggle_path(@game,round), remote: :true, method: :post } %>
 
         <% if round.active %>
           <i class="fas fa-running"></i> Active
@@ -24,11 +27,12 @@
 
         <% if round.participations.present? %>
           <p><%= round.participations.count %> participations:<br>
-            <% round.participations.each do |partic| %>
-              |<em> <%= partic.user.email %></em>
+            <% round.participations.each do |particip| %>
+              |<em> <%= particip.user.email %></em>
             <% end %>
           </p>
         <% end %>
+
 
       </li>
     <% end %>
@@ -36,17 +40,18 @@
 
 <% else %> <!-- USER is a GUEST -->
 
-  <!-- After JOIN -->
+  <!-- After JOIN ( Show current Rounds ) -->
   <% if @game.rounds.all? {|r| r.users.include?(current_user)} %>
-  <ul>
-    <% @game.rounds.each do |round| %>
-      <li>
-        <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
-        <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
+    <ul>
+      <% @game.rounds.each do |round| %>
 
-      </li>
-    <% end %>
-  </ul>
+        <li>
+          <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
+          <%= link_to(round.kata_name,game_round_path(@game,round)) if round.kata_name %>
+        </li>
+
+      <% end %>
+    </ul>
 
   <!-- JOIN > First Time ( Allow to Create Participations )  -->
   <% else %>
