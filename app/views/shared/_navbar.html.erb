@@ -4,8 +4,8 @@
     <%= image_tag "logo.png" %>
     <% end %>
 
-  <%= link_to "Admin Dashboard", admin_dashboard_path if current_user&.admin %>
-  <div><i class="far fa-envelope"></i><%= current_user&.email %></div>
+  <%= link_to "<i class='fas fa-users-cog'></i> Admin Dashboard".html_safe, admin_dashboard_path if current_user&.admin %>
+  <div><i class="far fa-envelope"></i> <%= current_user&.email %></div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
