@@ -42,6 +42,7 @@
 
   <!-- After JOIN ( Show current Rounds ) -->
   <% if @game.rounds.all? {|r| r.users.include?(current_user)} %>
+    <hr>
     <ul>
       <% @game.rounds.each do |round| %>
 
