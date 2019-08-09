@@ -20,14 +20,20 @@
       <small><code><%= round.kata_id %></code></small>
 
       <% if round.participations.present? %>
-        <p>
-          <%= round.participations.count %> participation(s):<br>
-          <% round.participations.each do |particip| %>
-            |<em> <%= particip.user.email %></em>
-          <% end %>
-        </p>
+        <%= round.participations.count %> participation(s):<br>
+        <ol>
+
+        <% round.participations.each do |particip| %>
+          <li>
+
+            <em><%= particip.user.email %></em>
+
+          </li>
+        <% end %>
+
+        </ol>
       <% end %>
 
     </li>
-  <% end %>
+  <% end %> <!-- // game&.rounds.each do |round| -->
 </ol>
