@@ -1,0 +1,33 @@
+<!-- After JOIN ( Show current Rounds ) -->
+<% if game.rounds.all? {|r| r.users.include?(current_user)} %>
+  <hr>
+  <ul>
+    <% game.rounds.each do |round| %>
+      <li>
+
+        <!-- ACTIVE round -->
+        <% if round.active %>
+          <span style="color:darkorange"><i class="fas fa-running"></i> Active</span>
+          <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger" %>
+
+        <% else %>
+        <!-- COMPLETED round ( add link.DISABLED )-->
+          <span style="color:green"><i class="fas fa-check"></i> Completed</span>
+          <%= link_to ">> CodeWars <<", round.kata_url, target: "_blank", class: "btn btn-outline-danger disabled" %>
+        <% end %>
+
+        <%= link_to(round.kata_name,game_round_path(game,round)) if round.kata_name %>
+
+      </li>
+    <% end %>
+  </ul>
+
+<!-- JOIN > First Time ( Allow to Create Participations )  -->
+<% else %>
+
+  <h2>Participate!</h2>
+  <%= simple_form_for([ game, @participation ]) do |f| %>
+    <%= f.submit "JOIN", class: "btn btn-outline-success" %>
+  <% end %>
+
+<% end %>

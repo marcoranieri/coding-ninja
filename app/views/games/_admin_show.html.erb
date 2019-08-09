@@ -1,0 +1,33 @@
+<%= link_to "DELETE GAME", game, method: :delete, class: "btn btn-outline-danger" %>
+<hr>
+
+<h4>Rounds:</h4>
+<ol>
+  <% game&.rounds.each do |round| %>
+    <li>
+
+      <!-- Ajax call to toggle round.active -->
+      <%= check_box_tag dom_id(round, :checkbox), nil, round.active, data: { url: game_round_toggle_path(game,round), remote: :true, method: :post } %>
+
+      <% if round.active %>
+        <span style="color:darkorange"><i class="fas fa-running"></i> Active</span>
+      <% else %>
+        <span style="color:green"><i class="fas fa-check"></i> Completed</span>
+      <% end %>
+
+      <%= link_to(round.kata_name,game_round_path(game,round)) if round.kata_name %>
+
+      <small><code><%= round.kata_id %></code></small>
+
+      <% if round.participations.present? %>
+        <p>
+          <%= round.participations.count %> participation(s):<br>
+          <% round.participations.each do |particip| %>
+            |<em> <%= particip.user.email %></em>
+          <% end %>
+        </p>
+      <% end %>
+
+    </li>
+  <% end %>
+</ol>
