@@ -7,11 +7,17 @@ class ScraperKataCollection
   COLLECTION_URL = "https://www.codewars.com/collections"
 
   def self.get_titles_and_hrefs(coll_ref, output = "rb") # Full URL (www..) or just ID (katas-51)
-    # rb => _RETURN_ an [ array ] of { hashes }
-    # js => _RETURN_ an [ array ] of [ arrays ]
+    # "rb" => _RETURN_ an [ array ] of { hashes }
+    # "js" => _RETURN_ an [ array ] of [ arrays ]
 
     url = coll_ref.include?("www") ? coll_ref : BASE_URL + coll_ref
-    html_doc = Nokogiri::HTML(open(url).read)
+
+    begin
+      html_doc = Nokogiri::HTML(open(url).read)
+    rescue
+      puts "\n\nURL (collection_reference) is NOT VALID in #{self}\n\n"
+      return
+    end
 
     html_doc.search('.item-title a').map do |element|
       if output == "rb"
@@ -33,7 +39,12 @@ class ScraperKataCollection
   def self.filter_by_kyu(kyu1, kyu2 = nil) # KYU is kata lvl (8 or 6 etc..)
     # _RETURN_ [ array ] of "collection_href"
 
-    html_doc = Nokogiri::HTML(open(COLLECTION_URL).read)
+    begin
+      html_doc = Nokogiri::HTML(open(COLLECTION_URL).read)
+    rescue
+      puts "\n\nNokogiri::HTML(open(COLLECTION_URL).read) FAILED TO RUN in #{self}\n\n"
+      return
+    end
 
     if kyu2.nil?
       return html_doc.search('span.has-tip')

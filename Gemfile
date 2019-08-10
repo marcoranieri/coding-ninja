@@ -19,6 +19,10 @@ gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 # FYI, this theme REMOVE the filtered research
 gem 'active_admin_flat_skin'
 
+# For after_tansaction callback- https://github.com/grosser/ar_after_transaction
+# gem install ar_after_transaction
+gem 'ar_after_transaction', '~> 0.6.0'
+
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'sassc-rails'

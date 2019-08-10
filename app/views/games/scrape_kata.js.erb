@@ -1,23 +1,39 @@
 console.log("scrape_kata.js.erb");
+const mainDiv = document.querySelector("#div-inspired");
 
-const kataArray = <%= @katas_array.to_json.html_safe %>;
-
-const reducer = (accumulator, currentValue) => {
-  accumulator + `
-    <a href="https://www.codewars.com${currentValue[1]}">${currentValue[0]}</a>
-  `
-};
-
-const content = [];
-
-kataArray.forEach((array) => {
-  array.forEach((kata) => {
+const insertSuggestions = (kataArray, mainDiv) => {
+  const content = [];
+  kataArray.flat().forEach((kata) => {
     content.push(`
-      <a style="display:block;" target="_blank" href="https://www.codewars.com${kata[1]}">${kata[0]}</a>
+      <a style="display:block;" target="_blank"
+        href="https://www.codewars.com${kata[1]}">
+        ${kata[0]}
+      </a>
       ( ${kata[1]} )
     `);
   });
-});
 
-const mainDiv = document.querySelector("#div-inspired");
-mainDiv.innerHTML = content.join("");
+  mainDiv.innerHTML = content.join("");
+}
+
+if (sessionStorage.katasarray) {
+
+  console.log("Using SessionStorage");
+
+  const kataArray = JSON.parse(sessionStorage.getItem('katasarray'))
+  insertSuggestions(kataArray, mainDiv)
+
+} else {
+
+  console.log("NO SessionStorage available");
+
+  <% katas_array = ScraperKataCollection.filter_by_kyu(8, 7).map do |url| %>
+    <% ScraperKataCollection.get_titles_and_hrefs(url, "js") %>
+  <% end %>
+
+  const kataArray = <%= katas_array.to_json.html_safe %>;
+  sessionStorage.setItem('katasarray', JSON.stringify(kataArray))
+  insertSuggestions(kataArray, mainDiv);
+
+}
+
