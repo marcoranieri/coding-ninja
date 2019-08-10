@@ -25,6 +25,11 @@
 
 <%= link_to "Get Inspired!", controller: "games", action: "scrape_kata", remote: true %>
 
+<script>
+document.querySelector("[data-remote]")
+  .classList.add("btn","btn-outline-success")
+</script>
+
 <br><br>
 
 <div id="div-inspired"></div>
