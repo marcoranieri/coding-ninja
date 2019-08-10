@@ -54,32 +54,28 @@ class GamesController < ApplicationController
   end
 
   def scrape_kata
+    # if session[:katas_array].present?
+    #   @katas_array = session[:katas_array]
+    # else
+    #   @katas_array = ScraperKataCollection.filter_by_kyu(8, 7).map do |url|
+    #     ScraperKataCollection.get_titles_and_hrefs(url, "js")
+    #   end
 
-    collection  = ScraperKataCollection.filter_by_kyu(8, 7)
-    @katas_array = collection.map do |scraped_kata_url|
-      ScraperKataCollection.get_titles_and_hrefs(scraped_kata_url, "js")
-    end
-
+    #   session[:katas_array] = @katas_array
+    # end
 # in "app/views/games/scrape_kata.js.erb"
 # console.log('<%= @katas_array.first.first.first.to_json.html_safe %>');
-
 # mainDiv.innerHTML = `
 #   <ul>
 #     <li>TITLE:
 #       <%= link_to @katas_array.first.first.first.to_json.html_safe,
 #         ScraperKataCollection::BASE_URL + @katas_array.first.first.last.gsub("&quot;","") %>
 #     </li>
-#     <li>
-#       <ul>
-
-#       </ul>
-#     </li>
-
 #   </ul>
 # `
-
     respond_to do |format|
-      format.js  # <-- will render `app/views/games/scrape_kata.js.erb`
+      # Will render ONLY `app/views/games/scrape_kata.js.erb`
+      format.js { render layout: false } # will not look for any .html.erb views
     end
 
   end

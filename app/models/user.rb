@@ -3,6 +3,8 @@ require 'open-uri'
 
 class User < ApplicationRecord
 
+  after_create :fetch_api_codewars_user_info
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -14,7 +16,7 @@ class User < ApplicationRecord
 
   # Fetch CodewarsUserInfo with codewars_username field (or set a default value)
   def fetch_api_codewars_user_info
-    private_fetch_user
+    private_fetch_user_info
   end
 
   # Helpers for Json API
@@ -32,13 +34,21 @@ class User < ApplicationRecord
 
   private
 
-  def private_fetch_user
-    username = codewars_username || "marcoranieri"
-    url = "https://www.codewars.com/api/v1/users/#{username}"
-    user_json = JSON.parse(open(url).read)
-    # puts JSON.pretty_generate(user_json)
-    self.json_response = user_json
-    self.nickname ||= username
-    self.save!
+  def private_fetch_user_info
+  # after_tansaction callback gem - https://github.com/grosser/ar_after_transaction
+    ActiveRecord::Base.after_transaction do
+      if codewars_username
+        begin
+          url = "https://www.codewars.com/api/v1/users/#{codewars_username}"
+          # puts JSON.pretty_generate(JSON.parse(open(url).read))
+          self.json_response = JSON.parse(open(url).read)
+          self.json_completed_katas = CodewarsApiFetch.completed_kata(codewars_username, codewars_api_key)
+          self.nickname ||= codewars_username
+          self.save!
+        rescue
+          return
+        end
+      end
+    end
   end
 end

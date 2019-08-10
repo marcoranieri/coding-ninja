@@ -30,6 +30,7 @@ User.create!(
   email: "a@test.com",
   password: "123456",
   nickname: "admin_nickname",
+  codewars_username: "marcoranieri",
   codewars_api_key: "qsoyRuWkzMk6e5xZuey7",
   admin: true
 )
@@ -42,7 +43,20 @@ puts "pass: 123456"
 User.create!(
   email: "s@test.com",
   password: "123456",
+  codewars_username: "samricotta",
   nickname: "marcoranieri",
+)
+
+puts""
+
+puts "ARTHUR Devise user ( login purpose ):"
+puts "arthur@test.com"
+puts "pass: 123456"
+User.create!(
+  email: "arthur@test.com",
+  password: "123456",
+  nickname: "arthur-littm",
+  codewars_username: "arthur-littm",
 )
 
 puts "_________________________________________"
@@ -89,7 +103,7 @@ puts "Creating n°3 Games *with WINNER*"
       active:   false,
       winners:  winners_array.uniq
     )
-    puts " - #{i}. Kata_id: #{r.kata_id}"
+    puts " - #{i+1}. Kata_id: #{r.kata_id}"
     r.fetch_api_codewars_kata_info
   end
   puts "_________________________________________"
@@ -125,7 +139,7 @@ puts "Creating n°2 Games *NO WINNER yet*"
       active:   false,
       winners:  winners_array.uniq
     )
-    puts " - #{i}. Kata_id: #{r.kata_id}"
+    puts " - #{i+1}. Kata_id: #{r.kata_id}"
     r.fetch_api_codewars_kata_info
   end
 
@@ -138,7 +152,7 @@ puts "Creating n°2 Games *NO WINNER yet*"
       notes:   Faker::Lorem.paragraph,
       game:    Game.all.sample
     )
-    puts " - #{i}. Kata_id: #{r.kata_id}"
+    puts " - #{i+1}. Kata_id: #{r.kata_id}"
     r.fetch_api_codewars_kata_info
   end
   puts "_________________________________________"
