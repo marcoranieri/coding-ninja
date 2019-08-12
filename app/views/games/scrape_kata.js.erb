@@ -4,15 +4,18 @@ const mainDiv        = document.querySelector("#div-inspired");
 const btnGetInspired = document.querySelector("#btn-get-inspired");
 
 const insertSuggestions = (kataArray, mainDiv) => {
-  const content = ["<h3 style='color:darkgrey'>Hold SHIFT key while clicking to add it!</h3>"];
+  const content = [
+    "<h3 style='color:darkgrey'>Hold SHIFT key while clicking to add it!</h3>"
+  ];
+
   kataArray.flat().forEach((kata) => {
-    if (kata[1].includes("kata")) {
+    if (kata[1].includes("kata")) { // only kata href ( no user/no collections )
       content.push(`
         <a style="display:block;" target="_blank" class="suggestions"
           href="https://www.codewars.com${kata[1]}">
           ${kata[0]}
+          <small><code>${kata[1]}</code></small>
         </a>
-        ( ${kata[1]} )
       `);
     }
   });
@@ -20,16 +23,36 @@ const insertSuggestions = (kataArray, mainDiv) => {
   mainDiv.innerHTML = content.join("");
 }
 
+// Add a new Round field ( by clicking .add_fields ) if no empty field available
+const checkIfClick = () => {
+  const emptyInputFields = $('input[name*="kata_id"]:not([type=hidden])')
+  .filter(function() { // only Round inputs ( not hidden )
+    return !this.value;
+  })
+  .filter(function() { // only visible inputs ( NO display:none on the parent )
+    return this.parentNode.parentNode.style.display !== "none";
+  })
+
+  if (emptyInputFields.length == 0) { // add NewField if no empty field available
+    document.querySelector(".add_fields").click()
+  }
+}
+
+// if SHIFT key is pressed while clicking on a suggestion
+// populate first empty Round input with clicked link ( Kata_id )
 const addSuggestionToForm = () => {
   $('a[href*="kata"]').click(function(e) {
     if (e.shiftKey === true) {
-      e.preventDefault()
+      e.preventDefault(); // to open link on a new window
       $('input[name*="kata_id"]').each(function() {
         if (this.value === "") {
-          this.value = e.target.attributes.href.nodeValue.split("/").pop()
+          this.value = e.target.attributes.href.nodeValue.split("/").pop();
+          e.target.remove(); // after clicked, remove suggestion from list
+          return false; // break ( populate only the first empty one )
         }
       })
-      document.querySelector(".add_fields").click()
+
+      checkIfClick()
     }
   });
 }
