@@ -24,7 +24,11 @@ const addSuggestionToForm = () => {
   $('a[href*="kata"]').click(function(e) {
     if (e.shiftKey === true) {
       e.preventDefault()
-      $('input[name*="kata_id"]').val(e.target.attributes.href.nodeValue.split("/").pop())
+      $('input[name*="kata_id"]').each(function() {
+        if (this.value === "") {
+          this.value = e.target.attributes.href.nodeValue.split("/").pop()
+        }
+      })
       document.querySelector(".add_fields").click()
     }
   });
