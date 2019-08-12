@@ -1,39 +1,58 @@
 console.log("scrape_kata.js.erb");
-const mainDiv = document.querySelector("#div-inspired");
+
+const mainDiv        = document.querySelector("#div-inspired");
+const btnGetInspired = document.querySelector("#btn-get-inspired");
 
 const insertSuggestions = (kataArray, mainDiv) => {
-  const content = [];
+  const content = ["<h3 style='color:darkgrey'>Hold SHIFT key while clicking to add it!</h3>"];
   kataArray.flat().forEach((kata) => {
-    content.push(`
-      <a style="display:block;" target="_blank"
-        href="https://www.codewars.com${kata[1]}">
-        ${kata[0]}
-      </a>
-      ( ${kata[1]} )
-    `);
+    if (kata[1].includes("kata")) {
+      content.push(`
+        <a style="display:block;" target="_blank" class="suggestions"
+          href="https://www.codewars.com${kata[1]}">
+          ${kata[0]}
+        </a>
+        ( ${kata[1]} )
+      `);
+    }
   });
 
   mainDiv.innerHTML = content.join("");
 }
 
-if (sessionStorage.katasarray) {
-
-  console.log("Using SessionStorage");
-
-  const kataArray = JSON.parse(sessionStorage.getItem('katasarray'))
-  insertSuggestions(kataArray, mainDiv)
-
-} else {
-
-  console.log("NO SessionStorage available");
-
-  <% katas_array = ScraperKataCollection.filter_by_kyu(8, 7).map do |url| %>
-    <% ScraperKataCollection.get_titles_and_hrefs(url, "js") %>
-  <% end %>
-
-  const kataArray = <%= katas_array.to_json.html_safe %>;
-  sessionStorage.setItem('katasarray', JSON.stringify(kataArray))
-  insertSuggestions(kataArray, mainDiv);
-
+const addSuggestionToForm = () => {
+  $('a[href*="kata"]').click(function(e) {
+    if (e.shiftKey === true) {
+      e.preventDefault()
+      $('input[name*="kata_id"]').val(e.target.attributes.href.nodeValue.split("/").pop())
+      document.querySelector(".add_fields").click()
+    }
+  });
 }
 
+const scrapingCodewars = () => {
+  if (sessionStorage.katasarray) {
+
+    console.log("Using SessionStorage");
+
+    const kataArray = JSON.parse(sessionStorage.getItem('katasarray'))
+    insertSuggestions(kataArray, mainDiv)
+
+  } else {
+
+    console.log("NO SessionStorage available");
+
+    <% katas_array = ScraperKataCollection.filter_by_kyu(8, 7).map do |url| %>
+      <% ScraperKataCollection.get_titles_and_hrefs(url, "js") %>
+    <% end %>;
+
+    const kataArray = <%= katas_array.to_json.html_safe %>;
+    sessionStorage.setItem('katasarray', JSON.stringify(kataArray));
+    insertSuggestions(kataArray, mainDiv);
+  }
+
+  btnGetInspired.classList.add("disabled");
+  addSuggestionToForm();
+}
+
+scrapingCodewars();

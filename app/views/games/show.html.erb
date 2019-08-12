@@ -2,11 +2,11 @@
 
 <%= link_to "< BACK", :root, class: "btn btn-outline-primary" %>
 
-<% if current_user&.admin %> <!-- USER is an ADMIN ---------------------------->
+<% if current_user&.admin %> <!-- USER is an ADMIN -->
 
   <%= render "admin_show", game: @game %>
 
-<% else %> <!-- USER is a GUEST ----------------------------------------------->
+<% else %> <!-- USER is a GUEST -->
 
   <%= render "guest_show", game: @game %>
 

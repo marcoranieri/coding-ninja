@@ -42,10 +42,7 @@ class Round < ApplicationRecord
 
   def private_fetch_kata
     kata_ref = kata_id || "valid-braces" # :id_or_slug
-    url = "https://www.codewars.com/api/v1/code-challenges/#{kata_ref}"
-    kata_json = JSON.parse(open(url).read)
-    # puts JSON.pretty_generate(kata_json)
-    self.json_response = kata_json
+    self.json_response = CodewarsApiFetch.kata_info(kata_ref)
     self.save!
   end
 end

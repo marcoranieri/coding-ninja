@@ -20,7 +20,7 @@ class CodewarsApiFetch
   end
 
   def self.kata_info(kata_ref) # kata_ref = "/57a429e253ba3381850000fb"
-    url = "https://www.codewars.com/api/v1/code-challenges#{kata_ref}"
+    url = "https://www.codewars.com/api/v1/code-challenges/#{kata_ref}"
     # puts JSON.pretty_generate(JSON.parse(open(url).read))
     JSON.parse(open(url).read)
   end
