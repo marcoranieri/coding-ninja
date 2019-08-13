@@ -26,9 +26,12 @@ class RoundsController < ApplicationController
 
     # @game = Game.find(params[:game_id])
 
-    respond_to do |format|
-      format.js  # <-- will render `app/views/games/toggle.js.erb`
-    end
+    # Trigger "channel.bind('update',...)" function in application.js
+    Pusher.trigger('round', 'update', {})
+
+    # respond_to do |format|
+      # format.js  # <-- will render `app/views/games/toggle.js.erb`
+    # end
   end
 
   private

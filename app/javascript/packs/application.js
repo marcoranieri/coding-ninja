@@ -2,7 +2,6 @@ import "bootstrap";
 
 console.log("Hello World from /pack/application.js");
 // $(document).on('turbolinks:load',function() {
-  // console.log("Turbolinks!");
 
 // REMOVE FIELD____________________________________________
   $('form').on('click', '.remove_record', function(event) {
@@ -20,3 +19,21 @@ console.log("Hello World from /pack/application.js");
   });
 
 // }); // end of Turbolinks:LOAD
+
+// No DATA are passed on Ajax Request ( handled by Rounds#TOGGLE )
+// $('input[name*="checkbox_round"]').on('ajax:success', function(data,status,xhr) {
+//   console.log("data",data);
+//   console.log("status",status);
+//   console.log("xhr",xhr);
+// })
+
+var pusher = new Pusher('222d943fdebfb1ef78b4', {
+  cluster: 'eu',
+  forceTLS: true
+});
+
+var channel = pusher.subscribe('round');
+channel.bind('update', function(data) {
+  // no data needed, just refreshing both sides ( admin/guest )
+  window.location.reload()
+});

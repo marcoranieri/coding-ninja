@@ -23,6 +23,8 @@ gem 'active_admin_flat_skin'
 # gem install ar_after_transaction
 gem 'ar_after_transaction', '~> 0.6.0'
 
+gem 'pusher'
+
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'sassc-rails'
