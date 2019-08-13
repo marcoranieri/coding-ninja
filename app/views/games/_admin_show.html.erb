@@ -6,13 +6,13 @@
   <% game&.rounds.each do |round| %>
     <li>
 
-      <!-- Ajax call to toggle round.active -->
+      <!-- Ajax call to TOGGLE round.active -->
       <%= check_box_tag dom_id(round, :checkbox), nil, round.active, data: { url: game_round_toggle_path(game,round), remote: :true, method: :post } %>
 
       <% if round.active %>
         <span style="color:darkorange"><i class="fas fa-running"></i> Active</span>
       <% else %>
-        <span style="color:green"><i class="fas fa-check"></i> Completed</span>
+        <span style="color:lightgreen"><i class="fas fa-check"></i> Completed</span>
       <% end %>
 
       <%= link_to(round.kata_name,game_round_path(game,round)) if round.kata_name %>
@@ -20,20 +20,32 @@
       <small><code><%= round.kata_id %></code></small>
 
       <% if round.participations.present? %>
-        <%= round.participations.count %> participation(s):<br>
-        <ol>
+        <%= pluralize(round.participations.count, "participation") %>:<br>
 
-        <% round.participations.each do |particip| %>
+        <ol>
+        <% round.participations.each do |part| %>
           <li>
 
-            <em><%= particip.user.email %></em>
+          <% if part.user.completed.pluck("id").include?(round.kata_id) %>
+          <% kata = part.user.completed.find{|x| x["id"] == round.kata_id} %>
+            <span style="color:darkred">
+              <i class="fas fa-exclamation-triangle"></i> already DONE!
+              (<%= DateTime.parse(kata["completedAt"]).strftime("%d/%m/%Y") %>)
+            </span>
+          <% else %>
+            <span style="color:darkgreen">
+              <i class="far fa-thumbs-up"></i> Good to GO
+            </span>
+          <% end %>
+            <em><%= part.user.email %></em>
 
           </li>
-        <% end %>
-
+        <% end %> <!-- // round.participations.each -->
         </ol>
-      <% end %>
+
+      <% end %> <!-- // round.participations.present? -->
 
     </li>
+    <br><br>
   <% end %> <!-- // game&.rounds.each do |round| -->
 </ol>

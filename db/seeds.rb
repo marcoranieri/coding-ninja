@@ -37,19 +37,31 @@ User.create!(
 
 puts""
 
-puts "STUDENT Devise user ( login purpose ):"
-puts "s@test.com"
+puts "MARCO Devise user ( valid codewars_username ):"
+puts "m@test.com"
 puts "pass: 123456"
 User.create!(
-  email: "s@test.com",
+  email: "m@test.com",
   password: "123456",
-  codewars_username: "samricotta",
+  codewars_username: "marcoranieri",
   nickname: "marcoranieri",
 )
 
 puts""
 
-puts "ARTHUR Devise user ( login purpose ):"
+puts "SAM Devise user ( valid codewars_username ):"
+puts "s@test.com"
+puts "pass: 123456"
+User.create!(
+  email: "sam@test.com",
+  password: "123456",
+  codewars_username: "samricotta",
+  nickname: "samricotta",
+)
+
+puts""
+
+puts "ARTHUR Devise user ( valid codewars_username ):"
 puts "arthur@test.com"
 puts "pass: 123456"
 User.create!(
@@ -69,7 +81,7 @@ puts "Creating n°10 Users"
     nickname: Faker::Superhero.name
   )
   u.fetch_api_codewars_user_info
-  puts "#{i}. #{u.email} - #{u.nickname}"
+  puts "#{i+1}. #{u.email} - #{u.nickname}"
 end
 
 puts "_________________________________________"
@@ -83,7 +95,7 @@ puts "Creating n°3 Games *with WINNER*"
     notes:      Faker::Lorem.paragraph,
     user:       User.all.sample # winner
   )
-  puts "GAME #{i}. #{g.title}"
+  puts "GAME #{i+1}. #{g.title}"
 
   puts ""
 
@@ -119,7 +131,7 @@ puts "Creating n°2 Games *NO WINNER yet*"
     max_rounds: rand(1..4),
     notes:      Faker::Lorem.paragraph
   )
-  puts "GAME #{i}. #{g.title}"
+  puts "GAME #{i+1}. #{g.title}"
 
   puts ""
 

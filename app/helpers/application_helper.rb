@@ -8,8 +8,6 @@ module ApplicationHelper
     # raise
     link_to(name, '#', class: "add_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")})
   end
-end
-
 # FIELDS => "<div class=\"round-form form-inline\">\n  <div class=\"form-group string optional game_rounds_kata_id\">
 # <label class=\"form-control-label string optional\" for=\"game_rounds_attributes_69937154907740_kata_id\">Kata</label>
 # <input class=\"form-control string optional\" type=\"text\" name=\"game[rounds_attributes][69937154907740][kata_id]\" id=\"game_rounds_attributes_69937154907740_kata_id\" /></div>\n
@@ -19,3 +17,4 @@ end
 #   <p>\n    <input class=\"hidden\" type=\"hidden\" value=\"false\" name=\"game[rounds_attributes][69937154907740][_destroy]\" i
 #   d=\"game_rounds_attributes_69937154907740__destroy\" />\n    <a class=\"remove_record\" href=\"#\">Delete Round</a>\n
 #   </p>\n</div>\n"
+end

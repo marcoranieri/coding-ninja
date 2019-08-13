@@ -10,6 +10,13 @@ class ParticipationsController < ApplicationController
       @participation.save!
     end
 
+    # Refresh user COMPLETED kata when joining a game ( through participations )
+    current_user.json_completed_katas = CodewarsApiFetch.completed_kata(
+      current_user.codewars_username,
+      current_user.codewars_api_key
+    )
+    current_user.save!
+
     redirect_to game_path(@game)
   end
 
