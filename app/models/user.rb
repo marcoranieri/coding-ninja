@@ -32,6 +32,10 @@ class User < ApplicationRecord
     json_response["ranks"]["overall"]["color"] if json_response
   end
 
+  def completed
+    json_completed_katas["data"] if json_completed_katas
+  end
+
   private
 
   def private_fetch_user_info
