@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   # In games#new form, fetch kata collections for inspiration
   get "scrape_kata", to: "games#scrape_kata"
+  post "webhook", to: "webhooks#handle"
 
   root to: 'games#index'
 end
