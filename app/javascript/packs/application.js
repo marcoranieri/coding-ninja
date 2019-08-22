@@ -34,6 +34,11 @@ var pusher = new Pusher('222d943fdebfb1ef78b4', {
 
 var channel = pusher.subscribe('round');
 channel.bind('update', function(data) {
-  // no data needed, just refreshing both sides ( admin/guest )
-  window.location.reload()
+  const url =  window.location.href
+
+  if (url.match(/games\/\d+/)) { // only if in Game#SHOW
+    // no data needed, refreshing both sides ( admin/guest )
+    window.location.reload()
+  }
+
 });

@@ -35,4 +35,5 @@ end
 
 # p CodewarsApiFetch.completed_kata("marcoranieri", "qsoyRuWkzMk6e5xZuey7")
 # p CodewarsApiFetch.completed_kata("marcoranieri", "qsoyRuWkzMk6e5xZuey7", only_last: true)
-# CodewarsApiFetch.kata_info("57a429e253ba3381850000fb")
+# p CodewarsApiFetch.kata_info("57a429e253ba3381850000fb")
+p CodewarsApiFetch.kata_info("5d52efc490b24300131d7f0d")
